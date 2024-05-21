@@ -2,21 +2,25 @@
 
 import 'package:flutter/material.dart';
 
-class LoomiSimpleText extends StatelessWidget {
+class LoomiTitleText extends StatelessWidget {
   FontWeight? fontWeight;
   Color color;
   String text;
   TextAlign textAlign;
   double? fontSize;
-  LoomiSimpleText({
+  LoomiTitleText({
     Key? key,
     required this.text,
-    this.color = const Color.fromARGB(255, 121, 123, 127),
-    this.fontWeight,
-    this.fontSize = 15,
+    this.color = Colors.white,
+    this.fontWeight = FontWeight.w600,
+    this.fontSize = 25,
     this.textAlign = TextAlign.center,
   }) : super(key: key);
-
+          //   child: LoomiSimpleText(
+          // text: 'Tell us more!',
+          // fontSize: 25,
+          // fontWeight: FontWeight.w600,
+          // color: Colors.white,
   @override
   Widget build(BuildContext context) {
     return Text(
