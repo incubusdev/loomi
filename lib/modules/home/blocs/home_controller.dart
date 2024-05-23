@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loomiproject/data/moviesProvider/repository/movies_repo_rest.dart';
 import 'package:loomiproject/models/movie_model.dart';
 
 
@@ -10,19 +11,18 @@ class HomeController extends GetxController {
   TextEditingController  questionField = TextEditingController();
   final PageController pageCtrl = PageController();
 
-  RxList<MovieModel> movies = [
-  MovieModel(title: 'Barbie', description: 'dasdasd das dsd as dasdasdasd asdas dasdasdasd asda fga s fasdasdasdasdas', image: 'assets/mockybarbie.png', type: 'Musical'),
-  MovieModel(title: 'Guardians of Galaxy', description: 'dasdasd das dsd as dasdasdasd asdas dasdasdasd asda fga s fasdasdasdasdas', image: 'assets/mocky2.png', type: 'Adventure'),
-  MovieModel(title: 'Pixels', description: 'dasdasd das dsd as dasdasdasd asdas dasdasdasd asda fga s fasdasdasdasdas', image: 'assets/mocky3.png', type: 'Comedy'),
-  MovieModel(title: 'Coringa', description: 'dasdasd das dsd as dasdasdasd asdas dasdasdasd asda fga s fasdasdasdasdas', image: 'assets/mocky4.png', type: 'Comedy'),
-  MovieModel(title: 'Jhon Wick', description: 'dasdasd das dsd as dasdasdasd asdas dasdasdasd asda fga s fasdasdasdasdas', image: 'assets/mocky5.png', type: 'Comedy'),
-
-  ].obs;
+  RxList<MovieModel> movies = RxList();
+  MoviesRepoRest moviesRepoRest = Get.find();
+  RxBool isLoading = true.obs;
+  
 
      @override
-  void onInit() {
-background.value = movies[0].image;
-    // TODO: implement onInit
+  void onInit() async{
+isLoading.value = true;
+background.value = 'assets/DnD.png';
+     await getMovieList();
+isLoading.value = false;
+  
     super.onInit();
   }
   RxString background =''.obs;
@@ -41,7 +41,16 @@ background.value = movies[0].image;
 void onPageChanged(int index) async{
   await Future.delayed(Duration(milliseconds: 100));
   currentPage.value = index;
-    background.value = movies[index].image;
+    background.value = movies[index].poster;
     // performActionOnPageChange(index);
+  }
+
+  Future<void>getMovieList()async{
+
+
+    var response = await  moviesRepoRest.getAllMovies();
+
+       movies.addAll(response);
+
   }
 }

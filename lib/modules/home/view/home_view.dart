@@ -5,10 +5,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:loomiproject/components/loomi_main_Buttom.dart';
 import 'package:loomiproject/components/loomi_simple_text.dart';
+import 'package:loomiproject/components/loomi_skeleton_movie.dart';
 import 'package:loomiproject/components/loomi_small_logo.dart';
 import 'package:loomiproject/components/loomi_title_text.dart';
 import 'package:loomiproject/models/movie_model.dart';
 import 'package:loomiproject/modules/home/blocs/home_controller.dart';
+import 'package:loomiproject/routes/routes.dart';
 import 'package:loomiproject/utils/loomi_colors.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -16,57 +18,67 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+controller.isLoading.value  = true;
     return Scaffold(
-      body: Stack(
+      body: Obx((){
+controller.isLoading.value;
+return Stack(
         alignment: Alignment.center,
         children: [
           background(),
-          PageView.builder(
-              onPageChanged: controller.onPageChanged,
-              controller: controller.pageCtrl,
-              itemCount: controller.movies.length,
-              itemBuilder: (context, index) {
-                MovieModel movie = controller.movies[index];
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    movieImage(movie),
-                    Container(
-                      color: Color.fromARGB(20, 0, 0, 0),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        child: Container(
-                            width: Get.width,
-                            height: Get.height * .65,
-                            decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [
-                                  Color.fromARGB(0, 0, 0, 0),
-                                  Color.fromARGB(94, 0, 0, 0),
-                                  Color.fromARGB(167, 0, 0, 0),
-                                ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.center)))),
-                    Container(
-                      width: Get.width,
-                      color: Color.fromARGB(54, 0, 0, 0),
-                    ),
-                    typeMovie(movie),
-                    titleMovie(movie),
-                    descriptionMovie(movie),
-                    nowShowingText(),
-                    watchButtom(),
-                    divider(),
-                    iconRateMovie(),
-                    iconGiftToSomeone(),
-                    movieAvailableTime(),
-                  ],
-                );
-              }),
+          Visibility(
+             visible: !controller.isLoading.value,
+               replacement: Padding(
+                 padding: const EdgeInsets.only(top: 120),
+                 child: LoomiSkeletonMovie(),
+               ),
+            child: PageView.builder(
+                onPageChanged: controller.onPageChanged,
+                controller: controller.pageCtrl,
+                itemCount: controller.movies.length,
+                itemBuilder: (context, index) {
+                  MovieModel movie = controller.movies[index];
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      movieImage(movie),
+                      Container(
+                        color: Color.fromARGB(20, 0, 0, 0),
+                      ),
+                      Positioned(
+                          bottom: 0,
+                          child: Container(
+                              width: Get.width,
+                              height: Get.height * .65,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                    Color.fromARGB(0, 0, 0, 0),
+                                    Color.fromARGB(94, 0, 0, 0),
+                                    Color.fromARGB(167, 0, 0, 0),
+                                  ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.center)))),
+                      Container(
+                        width: Get.width,
+                        color: Color.fromARGB(54, 0, 0, 0),
+                      ),
+                      typeMovie(movie),
+                      titleMovie(movie),
+                      descriptionMovie(movie),
+                      nowShowingText(),
+                      watchButtom(),
+                      divider(),
+                      iconRateMovie(),
+                      iconGiftToSomeone(),
+                      movieAvailableTime(),
+                    ],
+                  );
+                }),
+          ),
           Positioned(top: 50, child: iconAndCircleAvatar()),
         ],
-      ),
+      );})
     );
   }
 
@@ -79,7 +91,7 @@ class HomeView extends GetView<HomeController> {
               key: ValueKey<int>(controller.currentPage.value),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(controller.background.value),
+                  image: AssetImage(controller.isLoading.value ? 'assets/skeletonbackgound.png' : controller.background.value),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -91,7 +103,7 @@ class HomeView extends GetView<HomeController> {
     });
   }
 
-  Positioned movieImage(MovieModel movie) {
+  Widget movieImage(MovieModel movie) {
     return Positioned(
       bottom: 50,
       child: Container(
@@ -99,9 +111,9 @@ class HomeView extends GetView<HomeController> {
               borderRadius: BorderRadius.circular(30),
               // color: Colors.amber,
               image: DecorationImage(
-                  image: AssetImage(movie.image), fit: BoxFit.cover)),
+                  image: AssetImage(movie.poster == '' ? 'assets/DnD.png' :movie.poster  ), fit: BoxFit.cover)),
           // color: Colors.amber,
-
+    
           height: 630,
           width: 350),
     );
@@ -114,7 +126,7 @@ class HomeView extends GetView<HomeController> {
         child: Container(
             width: 300,
             child: Text(
-              movie.type,
+              movie.genre,
               style: TextStyle(
                   fontSize: 20,
                   color: Color.fromARGB(255, 235, 235, 235),
@@ -134,7 +146,7 @@ class HomeView extends GetView<HomeController> {
               alignment: Alignment.topLeft,
               child: Text(
                 textAlign: TextAlign.start,
-                movie.title,
+                movie.name,
                 style: TextStyle(
                     fontSize: 40,
                     color: Color.fromARGB(255, 235, 235, 235),
@@ -145,14 +157,17 @@ class HomeView extends GetView<HomeController> {
 
   Positioned descriptionMovie(MovieModel movie) {
     return Positioned(
-        bottom: 325,
+        bottom: 220,
         // left: 50,
         child: Container(
             // color: Colors.amber,
+             height: 185,
             width: 300,
             child: Text(
-              movie.description,
+maxLines: 7,
+              movie.synopsis,
               style: TextStyle(
+                   overflow: TextOverflow.ellipsis,
                   fontSize: 18,
                   color: Color.fromARGB(255, 255, 255, 255),
                   fontWeight: FontWeight.w300),
@@ -210,8 +225,10 @@ class HomeView extends GetView<HomeController> {
         Container(
             alignment: Alignment.topRight,
             width: 100,
-            child: CircleAvatar(
-              radius: 20,
+            child: InkWell(onTap: (){Get.toNamed(Routes.PROFILE);},
+              child: CircleAvatar(backgroundImage: AssetImage('assets/avatar.png'),backgroundColor: Colors.black,
+                radius: 20,
+              ),
             )),
       ],
     );

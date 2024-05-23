@@ -10,6 +10,8 @@ import 'package:loomiproject/modules/instructionsWereSent/blocs/instruction_were
 import 'package:loomiproject/modules/instructionsWereSent/view/instruction_were_sent_view.dart';
 import 'package:loomiproject/modules/login/blocs/login_bindings.dart';
 import 'package:loomiproject/modules/login/view/login_view.dart';
+import 'package:loomiproject/modules/profile/blocs/profile_bindings.dart';
+import 'package:loomiproject/modules/profile/view/profile_view.dart';
 import 'package:loomiproject/modules/tellUsMore/blocs/tell_us_more_bindings.dart';
 import 'package:loomiproject/modules/tellUsMore/view/tell_us_more_view.dart';
 import 'package:loomiproject/modules/welcomeBack/blocs/welcome_back_bindings.dart';
@@ -24,6 +26,7 @@ class Routes {
   static const String FORGOTPASSWORD = '/forgotpasword';
   static const String INSTRUCTIONSWERESENT = '/instructionsweresent';
   static const String HOME = '/home';
+  static const String PROFILE = '/profile';
 
 
 
@@ -88,6 +91,17 @@ class Routes {
         name: Routes.HOME,        
         page: () => const HomeView(),
         binding: HomeBindings(),
+        transition: Transition.fadeIn,
+        curve: Curves.easeInOut,
+        transitionDuration: Duration(milliseconds: 500)       
+      ),
+
+//-------------------------------------------------------------------------------------------------
+
+          GetPage(
+        name: Routes.PROFILE,        
+        page: () => const ProfileView(),
+        binding: ProfileBindings(),
         transition: Transition.fadeIn,
         curve: Curves.easeInOut,
         transitionDuration: Duration(milliseconds: 500)       
