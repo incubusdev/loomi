@@ -5,7 +5,7 @@ class LoginController extends GetxController {
 
 
 RxBool icon =  true.obs;
-RxBool isHoverButtom =  false.obs;
+RxBool isHoverButtom2 =  false.obs;
 TextEditingController emailTxt = TextEditingController();
 TextEditingController passwordTxt = TextEditingController();
 TextEditingController confirmPasswordTxt = TextEditingController();

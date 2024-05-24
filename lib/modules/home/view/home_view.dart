@@ -18,20 +18,19 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-controller.isLoading.value  = true;
-    return Scaffold(
-      body: Obx((){
-controller.isLoading.value;
-return Stack(
+// controller.isLoading.value  = true;
+    return Scaffold(body: Obx(() {
+      controller.isLoading.value;
+      return Stack(
         alignment: Alignment.center,
         children: [
           background(),
           Visibility(
-             visible: !controller.isLoading.value,
-               replacement: Padding(
-                 padding: const EdgeInsets.only(top: 120),
-                 child: LoomiSkeletonMovie(),
-               ),
+            visible: !controller.isLoading.value,
+            replacement: Padding(
+              padding: const EdgeInsets.only(top: 120),
+              child: LoomiSkeletonMovie(),
+            ),
             child: PageView.builder(
                 onPageChanged: controller.onPageChanged,
                 controller: controller.pageCtrl,
@@ -67,7 +66,7 @@ return Stack(
                       titleMovie(movie),
                       descriptionMovie(movie),
                       nowShowingText(),
-                      watchButtom(),
+                      watchButtom(movie),
                       divider(),
                       iconRateMovie(),
                       iconGiftToSomeone(),
@@ -78,8 +77,8 @@ return Stack(
           ),
           Positioned(top: 50, child: iconAndCircleAvatar()),
         ],
-      );})
-    );
+      );
+    }));
   }
 
   Obx background() {
@@ -91,7 +90,9 @@ return Stack(
               key: ValueKey<int>(controller.currentPage.value),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(controller.isLoading.value ? 'assets/skeletonbackgound.png' : controller.background.value),
+                  image: AssetImage(controller.isLoading.value
+                      ? 'assets/skeletonbackgound.png'
+                      : controller.background.value),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -111,9 +112,11 @@ return Stack(
               borderRadius: BorderRadius.circular(30),
               // color: Colors.amber,
               image: DecorationImage(
-                  image: AssetImage(movie.poster == '' ? 'assets/DnD.png' :movie.poster  ), fit: BoxFit.cover)),
+                  image: AssetImage(
+                      movie.poster == '' ? 'assets/DnD.png' : movie.poster),
+                  fit: BoxFit.cover)),
           // color: Colors.amber,
-    
+
           height: 630,
           width: 350),
     );
@@ -161,17 +164,23 @@ return Stack(
         // left: 50,
         child: Container(
             // color: Colors.amber,
-             height: 185,
+            height: 160,
             width: 300,
-            child: Text(
-maxLines: 7,
-              movie.synopsis,
-              style: TextStyle(
-                   overflow: TextOverflow.ellipsis,
-                  fontSize: 18,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontWeight: FontWeight.w300),
-            ).animate().fadeIn(delay: Duration(milliseconds: 1000))));
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    maxLines: 7,
+                    movie.synopsis,
+                    style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 196, 196, 196),
+                        fontWeight: FontWeight.w300),
+                  ).animate().fadeIn(delay: Duration(milliseconds: 1000)),
+                ],
+              ),
+            )));
   }
 
   Positioned nowShowingText() {
@@ -186,16 +195,34 @@ maxLines: 7,
             )));
   }
 
-  Positioned watchButtom() {
-    return Positioned(
+  Widget watchButtom(MovieModel movie) {
+    return Obx((){
+controller.isHoverButtom.value;
+return Positioned(
         bottom: 150,
         child: Container(
+            color: Colors.transparent,
             alignment: Alignment.center,
             width: 350,
             child: LoomiMainButtom(
+              ishover: controller.isHoverButtom.value,
+              onHover: (value) {
+                controller.isHoverButtom.value = !value;
+              },
+              ontap: () {
+                Get.toNamed(Routes.PLAYERVIDEO, arguments: movie);
+              },
               textButtom: 'Watch',
-            )));
+            ).animate().fadeIn(delay: Duration(milliseconds: 1300))));});
   }
+  Widget loginButtom() => Obx((){return LoomiMainButtom(
+      textButtom: 'Login', ishover: controller.isHoverButtom.value,onHover: (value) {
+          controller.isHoverButtom.value = !value;
+        
+      },ontap: () {
+        Get.toNamed(Routes.HOME);
+        
+      },);});
 
   Positioned divider() {
     return Positioned(
@@ -225,8 +252,13 @@ maxLines: 7,
         Container(
             alignment: Alignment.topRight,
             width: 100,
-            child: InkWell(onTap: (){Get.toNamed(Routes.PROFILE);},
-              child: CircleAvatar(backgroundImage: AssetImage('assets/avatar.png'),backgroundColor: Colors.black,
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(Routes.PROFILE);
+              },
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/avatar.png'),
+                backgroundColor: Colors.black,
                 radius: 20,
               ),
             )),
@@ -258,7 +290,7 @@ maxLines: 7,
                   )
                 ],
               )),
-        ));
+        ).animate().slideX(delay: Duration(milliseconds: 1350),begin: -1));
   }
 
   Positioned iconGiftToSomeone() {
@@ -285,7 +317,7 @@ maxLines: 7,
                   )
                 ],
               )),
-        ));
+        ).animate().slideX(delay: Duration(milliseconds: 1300),begin: -1));
   }
 
   Positioned movieAvailableTime() {
@@ -309,6 +341,6 @@ maxLines: 7,
                   ),
                 ],
               )),
-        ));
+        ).animate().slideX(delay: Duration(milliseconds: 1250),begin: -1));
   }
 }

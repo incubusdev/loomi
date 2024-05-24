@@ -78,7 +78,7 @@ class MovieModel {
       currentlyPlaying: map['currently_playing'] as bool,
       streamLink: map['stream_link'] as String,
       genre: map['genre'] as String,
-      poster: map['poster'] ??'',
+      poster: map['poster'] ??'assets/DnD.png',
       createdAt: map['createdAt'] as String,
       updatedAt: map['updatedAt'] as String,
       publishedAt: map['publishedAt'] as String,

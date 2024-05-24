@@ -76,7 +76,7 @@ class WelcomeBackView extends GetView<WelcomeBackController> {
           controller.isHoverButtom.value = !value;
         
       },ontap: () {
-        Get.toNamed(Routes.HOME);
+        Get.offAllNamed(Routes.HOME);
         
       },);});
 

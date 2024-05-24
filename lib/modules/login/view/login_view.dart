@@ -78,9 +78,9 @@ class LoginView extends GetView<LoginController> {
               Get.toNamed(Routes.TELLUSMORE);
             },
             onHover: (value) {
-              controller.isHoverButtom.value = !value;
+              controller.isHoverButtom2.value = !value;
             },
-            ishover: controller.isHoverButtom.value),
+            ishover: controller.isHoverButtom2.value),
       );
     });
   }

@@ -8,9 +8,10 @@ import 'package:loomiproject/models/movie_model.dart';
 class HomeController extends GetxController { 
 
 
+   RxBool isHoverButtom =  true.obs;
+   RxBool isHoverButtom2 =  true.obs;
   TextEditingController  questionField = TextEditingController();
   final PageController pageCtrl = PageController();
-
   RxList<MovieModel> movies = RxList();
   MoviesRepoRest moviesRepoRest = Get.find();
   RxBool isLoading = true.obs;

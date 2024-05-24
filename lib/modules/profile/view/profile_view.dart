@@ -52,7 +52,7 @@ class ProfileView extends StatelessWidget {
             ),
             deleteAccountButtom(),
             SizedBox(
-              height: 40,
+              height: 20,
             ),
             subscripstionsText('Subscriptions'),
             SizedBox(
@@ -60,7 +60,7 @@ class ProfileView extends StatelessWidget {
             ),
             LoomiSubscriptionButtom(),
             SizedBox(
-              height: 40,
+              height: 20,
             ),
             subscripstionsText('History'),
             SizedBox(
@@ -93,7 +93,7 @@ class ProfileView extends StatelessWidget {
                   colorBorder: Colors.white,
                   titleBorder: Colors.white,
                   width: 0.5,
-                  ontap: () {Get.toNamed(Routes.WELCOMEBACK);},
+                  ontap: () {Get.offAllNamed(Routes.WELCOMEBACK);},
                 ),
               ),
             ),
@@ -171,6 +171,9 @@ class ProfileView extends StatelessWidget {
     return LoomiProfileButtom(
       icon: Icons.shield_outlined,
       title: 'Change Password',
+ontap: () {
+  Get.toNamed(Routes.CHANGEPASSWORD);
+},
     );
   }
 }

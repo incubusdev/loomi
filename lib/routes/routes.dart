@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:loomiproject/modules/changePassword/blocs/change_password_bindings.dart';
+import 'package:loomiproject/modules/changePassword/view/change_password.dart';
 import 'package:loomiproject/modules/forgotPassword/blocs/forgot_password_bindings.dart';
 import 'package:loomiproject/modules/forgotPassword/view/forgot_password.dart';
 import 'package:loomiproject/modules/home/blocs/home_bindings.dart';
@@ -10,6 +12,8 @@ import 'package:loomiproject/modules/instructionsWereSent/blocs/instruction_were
 import 'package:loomiproject/modules/instructionsWereSent/view/instruction_were_sent_view.dart';
 import 'package:loomiproject/modules/login/blocs/login_bindings.dart';
 import 'package:loomiproject/modules/login/view/login_view.dart';
+import 'package:loomiproject/modules/playerVideo/blocs/player_video_bindings.dart';
+import 'package:loomiproject/modules/playerVideo/view/player_video_view.dart';
 import 'package:loomiproject/modules/profile/blocs/profile_bindings.dart';
 import 'package:loomiproject/modules/profile/view/profile_view.dart';
 import 'package:loomiproject/modules/tellUsMore/blocs/tell_us_more_bindings.dart';
@@ -26,7 +30,9 @@ class Routes {
   static const String FORGOTPASSWORD = '/forgotpasword';
   static const String INSTRUCTIONSWERESENT = '/instructionsweresent';
   static const String HOME = '/home';
+  static const String PLAYERVIDEO = '/playervideo';
   static const String PROFILE = '/profile';
+  static const String CHANGEPASSWORD = '/changepassword';
 
 
 
@@ -99,9 +105,31 @@ class Routes {
 //-------------------------------------------------------------------------------------------------
 
           GetPage(
+        name: Routes.PLAYERVIDEO,        
+        page: () => const PlayerVideoView(),
+        binding: PlayerVideoBindings(),
+        transition: Transition.fadeIn,
+        curve: Curves.easeInOut,
+        transitionDuration: Duration(milliseconds: 500)       
+      ),
+
+//-------------------------------------------------------------------------------------------------
+
+          GetPage(
         name: Routes.PROFILE,        
         page: () => const ProfileView(),
         binding: ProfileBindings(),
+        transition: Transition.fadeIn,
+        curve: Curves.easeInOut,
+        transitionDuration: Duration(milliseconds: 500)       
+      ),
+
+//-------------------------------------------------------------------------------------------------
+
+          GetPage(
+        name: Routes.CHANGEPASSWORD,        
+        page: () => const ChangePassword(),
+        binding: ChangePasswordBindings(),
         transition: Transition.fadeIn,
         curve: Curves.easeInOut,
         transitionDuration: Duration(milliseconds: 500)       
