@@ -1,78 +1,80 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
+
 class User {
-  final int id;
+  final int? id;
   final String username;
   final String email;
-  final String provider;
-  final bool confirmed;
-  final bool blocked;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String? provider;
+  final bool? confirmed;
+  final bool? blocked;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   User({
-    required this.id,
+     this.id,
     required this.username,
     required this.email,
-    required this.provider,
-    required this.confirmed,
-    required this.blocked,
-    required this.createdAt,
-    required this.updatedAt,
+     this.provider,
+     this.confirmed,
+     this.blocked,
+     this.createdAt,
+     this.updatedAt,
   });
 
   User copyWith({
-    int? id,
+    ValueGetter<int?>? id,
     String? username,
     String? email,
-    String? provider,
-    bool? confirmed,
-    bool? blocked,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    ValueGetter<String?>? provider,
+    ValueGetter<bool?>? confirmed,
+    ValueGetter<bool?>? blocked,
+    ValueGetter<DateTime?>? createdAt,
+    ValueGetter<DateTime?>? updatedAt,
   }) {
     return User(
-      id: id ?? this.id,
+      id: id != null ? id() : this.id,
       username: username ?? this.username,
       email: email ?? this.email,
-      provider: provider ?? this.provider,
-      confirmed: confirmed ?? this.confirmed,
-      blocked: blocked ?? this.blocked,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      provider: provider != null ? provider() : this.provider,
+      confirmed: confirmed != null ? confirmed() : this.confirmed,
+      blocked: blocked != null ? blocked() : this.blocked,
+      createdAt: createdAt != null ? createdAt() : this.createdAt,
+      updatedAt: updatedAt != null ? updatedAt() : this.updatedAt,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'id': id,
       'username': username,
       'email': email,
       'provider': provider,
       'confirmed': confirmed,
       'blocked': blocked,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
+      'createdAt': createdAt?.millisecondsSinceEpoch,
+      'updatedAt': updatedAt?.millisecondsSinceEpoch,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'] as int,
-      username: map['username'] as String,
-      email: map['email'] as String,
-      provider: map['provider'] as String,
-      confirmed: map['confirmed'] as bool,
-      blocked: map['blocked'] as bool,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
+      id: map['id']?.toInt(),
+      username: map['username'] ?? '',
+      email: map['email'] ?? '',
+      provider: map['provider'],
+      confirmed: map['confirmed'],
+      blocked: map['blocked'],
+      createdAt: map['createdAt'] != null ? DateTime.fromMillisecondsSinceEpoch(map['createdAt']) : null,
+      updatedAt: map['updatedAt'] != null ? DateTime.fromMillisecondsSinceEpoch(map['updatedAt']) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -80,10 +82,10 @@ class User {
   }
 
   @override
-  bool operator ==(covariant User other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
   
-    return 
+    return other is User &&
       other.id == id &&
       other.username == username &&
       other.email == email &&

@@ -87,7 +87,10 @@ class LoginView extends GetView<LoginController> {
 
   Row iconsLogin() {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      LoomiIconLoginTypes(color: LoomiColors.darkPurple,logo:Brand(Brands.google,size: 5,)),
+      LoomiIconLoginTypes(color: LoomiColors.darkPurple,logo:Brand(Brands.google,size: 5,),ontap: ()async {
+ await controller.googleLogin();
+        print('teste');
+      },),
       SizedBox(width: 15),
       LoomiIconLoginTypes(color: const Color.fromARGB(255, 97, 97, 100),logo: Icon(FontAwesome.apple_brand ,color: Colors.white,size: 40,),padding: 10,),
     ]);

@@ -36,7 +36,8 @@ dependencies:
   dio:
   better_player_plus: ^1.0.7
   flutter_native_splash: ^2.3.9
-
+  shared_preferences:
+  google_sign_in:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -117,12 +118,12 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/logosplash.png
+  # image: assets/logosplash.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
   # see the Android 12 section below.
-  # branding: assets/logosplash.png
+  branding: assets/logosplash.png
 
   # To position the branding image at the bottom of the screen you can use bottom, bottomRight,
   # and bottomLeft. The default values is bottom if not specified or specified something else.
@@ -149,7 +150,7 @@ flutter_native_splash:
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
     # 768 pixels in diameter.
-    image: assets/logosplash.png
+    # image: assets/logosplash.png
 
     # Splash screen background color.
     color: "#131418"
@@ -158,7 +159,7 @@ flutter_native_splash:
     #icon_background_color: "#111111"
 
     # The branding property allows you to specify an image used as branding in the splash screen.
-    # branding: assets/logosplash.png
+    branding: assets/logosplash.png
 
     # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
     # apply when the device is in dark mode. If they are not specified, the app will use the
